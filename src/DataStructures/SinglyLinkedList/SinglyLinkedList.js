@@ -3,6 +3,10 @@ class SinglyLinkedList {
     this.clear();
   }
 
+  get length() {
+    return this.count;
+  }
+
   get count() {
     return this._count;
   }

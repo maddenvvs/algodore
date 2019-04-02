@@ -8,6 +8,9 @@ class SinglyLinkedList:
     def __init__(self):
         self.clear()
 
+    def __len__(self):
+        return self.count
+
     @property
     def count(self):
         return self._count
