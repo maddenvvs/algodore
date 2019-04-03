@@ -1,0 +1,9 @@
+matrix:
+    include:
+        - language: csharp
+          mono: none
+          dotnet: 2.2.105
+          solution: Algodore.sln
+          script:
+              - dotnet restore
+              - dotnet test
