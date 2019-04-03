@@ -1,32 +1,19 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 namespace DataStructures
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
     public class SinglyLinkedList<T> : IEnumerable<T>
     {
-        public class Node
-        {
-            public Node(T value)
-            {
-                Value = value;
-                Next = null;
-            }
-
-            public T Value { get; set; }
-
-            public Node Next { get; set; }
-        }
-
         public SinglyLinkedList()
         {
-            Clear();
+            this.Clear();
         }
 
         public int Count { get; private set; }
 
-        public bool IsEmpty { get => Count == 0; }
+        public bool IsEmpty { get => this.Count == 0; }
 
         private Node Head { get; set; }
 
@@ -36,24 +23,27 @@ namespace DataStructures
         {
             var nodeToAppend = new Node(value);
 
-            return AppendNode(nodeToAppend);
+            return this.AppendNode(nodeToAppend);
         }
 
         public SinglyLinkedList<T> AppendNode(Node node)
         {
-            if (node == null) throw new ArgumentNullException(nameof(node));
-
-            if (Head == null)
+            if (node == null)
             {
-                Head = Tail = node;
+                throw new ArgumentNullException(nameof(node));
+            }
+
+            if (this.Head == null)
+            {
+                this.Head = this.Tail = node;
             }
             else
             {
-                Tail.Next = node;
-                Tail = Tail.Next;
+                this.Tail.Next = node;
+                this.Tail = this.Tail.Next;
             }
 
-            Count++;
+            this.Count++;
 
             return this;
         }
@@ -62,24 +52,27 @@ namespace DataStructures
         {
             var nodeToPrepend = new Node(value);
 
-            return PrependNode(nodeToPrepend);
+            return this.PrependNode(nodeToPrepend);
         }
 
         public SinglyLinkedList<T> PrependNode(Node node)
         {
-            if (node == null) throw new ArgumentNullException(nameof(node));
-
-            if (Head == null)
+            if (node == null)
             {
-                Head = Tail = node;
+                throw new ArgumentNullException(nameof(node));
+            }
+
+            if (this.Head == null)
+            {
+                this.Head = this.Tail = node;
             }
             else
             {
-                node.Next = Head;
-                Head = node;
+                node.Next = this.Head;
+                this.Head = node;
             }
 
-            Count++;
+            this.Count++;
 
             return this;
         }
@@ -88,29 +81,32 @@ namespace DataStructures
         {
             var nodeToInsert = new Node(value);
 
-            return InsertNodeAt(nodeToInsert, index);
+            return this.InsertNodeAt(nodeToInsert, index);
         }
 
         public SinglyLinkedList<T> InsertNodeAt(Node node, int index)
         {
-            if (node == null) throw new ArgumentNullException(nameof(node));
+            if (node == null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
 
             if (index == 0)
             {
-                return PrependNode(node);
+                return this.PrependNode(node);
             }
-            else if (index == Count)
+            else if (index == this.Count)
             {
-                return AppendNode(node);
+                return this.AppendNode(node);
             }
-            else if (index > 0 && index < Count)
+            else if (index > 0 && index < this.Count)
             {
-                var nodeBefore = GetNodeAt(index - 1);
+                var nodeBefore = this.GetNodeAt(index - 1);
 
                 node.Next = nodeBefore.Next;
                 nodeBefore.Next = node;
 
-                Count++;
+                this.Count++;
 
                 return this;
             }
@@ -120,25 +116,27 @@ namespace DataStructures
 
         public T GetAt(int index)
         {
-            return GetNodeAt(index).Value;
+            return this.GetNodeAt(index).Value;
         }
 
         public Node GetNodeAt(int index)
         {
-            if (IsEmpty || index < 0 || index >= Count)
+            if (this.IsEmpty || index < 0 || index >= this.Count)
+            {
                 throw new ArgumentOutOfRangeException(nameof(index));
+            }
 
             if (index == 0)
             {
-                return Head;
+                return this.Head;
             }
-            else if (index == Count - 1)
+            else if (index == this.Count - 1)
             {
-                return Tail;
+                return this.Tail;
             }
             else
             {
-                var currentNode = Head;
+                var currentNode = this.Head;
                 while (index > 0)
                 {
                     currentNode = currentNode.Next;
@@ -151,17 +149,20 @@ namespace DataStructures
 
         public SinglyLinkedList<T> RemoveFirst()
         {
-            if (IsEmpty) throw new InvalidOperationException("Cannot remove from empty linked list.");
-
-            if (Head == Tail)
+            if (this.IsEmpty)
             {
-                Head = Tail = null;
-                Count = 0;
+                throw new InvalidOperationException("Cannot remove from empty linked list.");
+            }
+
+            if (this.Head == this.Tail)
+            {
+                this.Head = this.Tail = null;
+                this.Count = 0;
             }
             else
             {
-                Head = Head.Next;
-                Count--;
+                this.Head = this.Head.Next;
+                this.Count--;
             }
 
             return this;
@@ -169,19 +170,22 @@ namespace DataStructures
 
         public SinglyLinkedList<T> RemoveLast()
         {
-            if (IsEmpty) throw new InvalidOperationException("Cannot remove from empty linked list.");
-
-            if (Head == Tail)
+            if (this.IsEmpty)
             {
-                Head = Tail = null;
-                Count = 0;
+                throw new InvalidOperationException("Cannot remove from empty linked list.");
+            }
+
+            if (this.Head == this.Tail)
+            {
+                this.Head = this.Tail = null;
+                this.Count = 0;
             }
             else
             {
-                var nodeBeforeTail = GetNodeAt(Count - 2);
-                Tail = nodeBeforeTail;
-                Tail.Next = null;
-                Count--;
+                var nodeBeforeTail = this.GetNodeAt(this.Count - 2);
+                this.Tail = nodeBeforeTail;
+                this.Tail.Next = null;
+                this.Count--;
             }
 
             return this;
@@ -189,22 +193,24 @@ namespace DataStructures
 
         public SinglyLinkedList<T> RemoveAt(int index)
         {
-            if (IsEmpty || index < 0 || index >= Count)
+            if (this.IsEmpty || index < 0 || index >= this.Count)
+            {
                 throw new ArgumentOutOfRangeException(nameof(index));
+            }
 
             if (index == 0)
             {
-                return RemoveFirst();
+                return this.RemoveFirst();
             }
-            else if (index == Count - 1)
+            else if (index == this.Count - 1)
             {
-                return RemoveLast();
+                return this.RemoveLast();
             }
             else
             {
-                var nodeBefore = GetNodeAt(index - 1);
+                var nodeBefore = this.GetNodeAt(index - 1);
                 nodeBefore.Next = nodeBefore.Next.Next;
-                Count--;
+                this.Count--;
 
                 return this;
             }
@@ -213,7 +219,7 @@ namespace DataStructures
         public int IndexOf(T value, IEqualityComparer<T> comparer)
         {
             var foundIndex = 0;
-            var currentNode = Head;
+            var currentNode = this.Head;
 
             while (currentNode != null && !comparer.Equals(currentNode.Value, value))
             {
@@ -224,12 +230,12 @@ namespace DataStructures
             return currentNode == null ? -1 : foundIndex;
         }
 
-        public int IndexOf(T value) => IndexOf(value, EqualityComparer<T>.Default);
+        public int IndexOf(T value) => this.IndexOf(value, EqualityComparer<T>.Default);
 
         public int IndexOf(Node node)
         {
             var foundIndex = 0;
-            var currentNode = Head;
+            var currentNode = this.Head;
 
             while (currentNode != null && currentNode != node)
             {
@@ -242,15 +248,15 @@ namespace DataStructures
 
         public SinglyLinkedList<T> Clear()
         {
-            Head = Tail = null;
-            Count = 0;
+            this.Head = this.Tail = null;
+            this.Count = 0;
 
             return this;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            var currentNode = Head;
+            var currentNode = this.Head;
 
             while (currentNode != null)
             {
@@ -260,6 +266,19 @@ namespace DataStructures
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+        public class Node
+        {
+            public Node(T value)
+            {
+                this.Value = value;
+                this.Next = null;
+            }
+
+            public T Value { get; set; }
+
+            public Node Next { get; set; }
+        }
     }
 }
