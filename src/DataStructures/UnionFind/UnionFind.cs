@@ -32,7 +32,7 @@ namespace DataStructures
 
         private IEqualityComparer<T> Comparer { get; set; }
 
-        public int Count { get; } => Parent.Count;
+        public int Count { get => Parent.Count; }
 
         public int SizeOf(T item) => Size[Find(item)];
 
@@ -62,7 +62,7 @@ namespace DataStructures
 
         public bool Union(T first, T second)
         {
-            var firstRoot = Find(first),
+            T firstRoot = Find(first),
                 secondRoot = Find(second);
 
             if (Comparer.Equals(firstRoot, secondRoot))
@@ -70,7 +70,7 @@ namespace DataStructures
                 return false;
             }
 
-            var firstSize = Size[firstRoot],
+            int firstSize = Size[firstRoot],
                 secondSize = Size[secondRoot];
             if (firstSize < secondSize)
             {

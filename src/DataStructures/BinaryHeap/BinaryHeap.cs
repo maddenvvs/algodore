@@ -26,9 +26,9 @@ namespace DataStructures
 
         private List<T> Items { get; }
 
-        public int Count { get; } => Items.Count;
+        public int Count { get => Items.Count; }
 
-        public bool IsEmpty { get; } => Count == 0;
+        public bool IsEmpty { get => Count == 0; }
 
         public T MinValue()
         {
@@ -80,7 +80,7 @@ namespace DataStructures
 
         private void siftDown(int index)
         {
-            var leftChild = leftChildOf(index),
+            int leftChild = leftChildOf(index),
                 rightChild = rightChildOf(index);
 
             while (leftChild < Items.Count)

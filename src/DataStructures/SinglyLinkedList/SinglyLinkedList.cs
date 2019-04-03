@@ -6,7 +6,7 @@ namespace DataStructures
 {
     public class SinglyLinkedList<T> : IEnumerable<T>
     {
-        public class Node<T>
+        public class Node
         {
             public Node(T value)
             {
@@ -16,7 +16,7 @@ namespace DataStructures
 
             public T Value { get; set; }
 
-            public Node<T> Next { get; set; }
+            public Node Next { get; set; }
         }
 
         public SinglyLinkedList()
@@ -24,13 +24,13 @@ namespace DataStructures
             Clear();
         }
 
-        private Node<T> Head { get; set; }
-
-        private Node<T> Tail { get; set; }
-
         public int Count { get; private set; }
 
-        public bool IsEmpty { get; } => Count == 0;
+        public bool IsEmpty { get => Count == 0; }
+
+        private Node Head { get; set; }
+
+        private Node Tail { get; set; }
 
         public SinglyLinkedList<T> Append(T value)
         {
@@ -39,7 +39,7 @@ namespace DataStructures
             return AppendNode(nodeToAppend);
         }
 
-        public SinglyLinkedList<T> AppendNode(Node<T> node)
+        public SinglyLinkedList<T> AppendNode(Node node)
         {
             if (node == null) throw new ArgumentNullException(nameof(node));
 
@@ -65,7 +65,7 @@ namespace DataStructures
             return PrependNode(nodeToPrepend);
         }
 
-        public SinglyLinkedList<T> PrependNode(Node<T> node)
+        public SinglyLinkedList<T> PrependNode(Node node)
         {
             if (node == null) throw new ArgumentNullException(nameof(node));
 
@@ -91,7 +91,7 @@ namespace DataStructures
             return InsertNodeAt(nodeToInsert, index);
         }
 
-        public SinglyLinkedList<T> InsertNodeAt(Node<T> node, int index)
+        public SinglyLinkedList<T> InsertNodeAt(Node node, int index)
         {
             if (node == null) throw new ArgumentNullException(nameof(node));
 
@@ -123,7 +123,7 @@ namespace DataStructures
             return GetNodeAt(index).Value;
         }
 
-        public Node<T> GetNodeAt(int index)
+        public Node GetNodeAt(int index)
         {
             if (IsEmpty || index < 0 || index >= Count)
                 throw new ArgumentOutOfRangeException(nameof(index));
@@ -210,12 +210,12 @@ namespace DataStructures
             }
         }
 
-        public int IndexOf(T value)
+        public int IndexOf(T value, IEqualityComparer<T> comparer)
         {
             var foundIndex = 0;
             var currentNode = Head;
 
-            while (currentNode != null && currentNode.Value != value)
+            while (currentNode != null && !comparer.Equals(currentNode.Value, value))
             {
                 currentNode = currentNode.Next;
                 foundIndex++;
@@ -224,7 +224,9 @@ namespace DataStructures
             return currentNode == null ? -1 : foundIndex;
         }
 
-        public int IndexOf(Node<T> node)
+        public int IndexOf(T value) => IndexOf(value, EqualityComparer<T>.Default);
+
+        public int IndexOf(Node node)
         {
             var foundIndex = 0;
             var currentNode = Head;
@@ -242,6 +244,7 @@ namespace DataStructures
         {
             Head = Tail = null;
             Count = 0;
+
             return this;
         }
 
