@@ -216,6 +216,18 @@ namespace DataStructures
             }
         }
 
+        /// <summary>
+        /// Finds index of the given value in the list with custom comparer provided.
+        ///
+        /// Time complexity: O(N).
+        ///
+        /// Space complexity: O(1).
+        ///
+        /// N is the length of the list.
+        /// </summary>
+        /// <param name="value">The value to find in the list.</param>
+        /// <param name="comparer">The comparer to use for equality checks.</param>
+        /// <returns>Returns index of the value if exists, -1 otherwise.</returns>
         public int IndexOf(T value, IEqualityComparer<T> comparer)
         {
             var foundIndex = 0;
@@ -230,8 +242,31 @@ namespace DataStructures
             return currentNode == null ? -1 : foundIndex;
         }
 
-        public int IndexOf(T value) => this.IndexOf(value, EqualityComparer<T>.Default);
+        /// <summary>
+        /// Finds index of the given value in the list.
+        ///
+        /// Time complexity: O(N).
+        ///
+        /// Space complexity: O(1).
+        ///
+        /// N is the length of the list.
+        /// </summary>
+        /// <param name="value">The value to find in the list.</param>
+        /// <returns>Returns index of the value if exists, -1 otherwise.</returns>
+        public int IndexOf(T value) =>
+            this.IndexOf(value, EqualityComparer<T>.Default);
 
+        /// <summary>
+        /// Finds index of the given node in the list.
+        ///
+        /// Time complexity: O(N).
+        ///
+        /// Space complexity: O(1).
+        ///
+        /// N is the length of the list.
+        /// </summary>
+        /// <param name="node">The node to find in the list.</param>
+        /// <returns>Returns index of the node if exists, -1 otherwise.</returns>
         public int IndexOf(Node node)
         {
             var foundIndex = 0;
@@ -246,6 +281,14 @@ namespace DataStructures
             return currentNode == null ? -1 : foundIndex;
         }
 
+        /// <summary>
+        /// Clears the chain of nodes in the list.
+        ///
+        /// Time complexity: O(1).
+        ///
+        /// Space complexity: O(1).
+        /// </summary>
+        /// <returns>Returns modified empty list.</returns>
         public SinglyLinkedList<T> Clear()
         {
             this.Head = this.Tail = null;
@@ -254,6 +297,10 @@ namespace DataStructures
             return this;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns>Returns the iterator object.</returns>
         public IEnumerator<T> GetEnumerator()
         {
             var currentNode = this.Head;
@@ -268,16 +315,31 @@ namespace DataStructures
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
+        /// <summary>
+        /// Node class representing node element in singly linked list.
+        /// </summary>
         public class Node
         {
+            /// <summary>
+            /// Initializes list node instance with the given value.
+            /// </summary>
+            /// <param name="value">Value to store in the node.</param>
             public Node(T value)
             {
                 this.Value = value;
                 this.Next = null;
             }
 
+            /// <summary>
+            /// Gets or sets value of given node.
+            /// </summary>
+            /// <value>Value stored in the node.</value>
             public T Value { get; set; }
 
+            /// <summary>
+            /// Gets or sets next node in the chain of singly linked list.
+            /// </summary>
+            /// <value>Reference to the next node in chain.</value>
             public Node Next { get; set; }
         }
     }
