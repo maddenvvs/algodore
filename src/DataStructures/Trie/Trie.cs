@@ -277,27 +277,27 @@ namespace DataStructures
             }
 
             var builder = new StringBuilder(prefix);
-            var stack = new Stack<(int, char, Node)>();
+            var stack = new Stack<(int, Node)>();
             var lastVisitedLevel = 0;
 
-            foreach (var pair in node.Children)
+            foreach (var child in node.Children.Values)
             {
-                stack.Push((1, pair.Key, pair.Value));
+                stack.Push((1, child));
             }
 
             while (stack.Count > 0)
             {
-                (int level, char letter, Node currentNode) = stack.Pop();
+                (int level, Node currentNode) = stack.Pop();
 
                 if (level > lastVisitedLevel)
                 {
-                    builder.Append(letter);
+                    builder.Append(currentNode.Letter);
                 }
                 else
                 {
                     var charsToRemove = lastVisitedLevel - level + 1;
                     builder.Remove(builder.Length - charsToRemove, charsToRemove);
-                    builder.Append(letter);
+                    builder.Append(currentNode.Letter);
                 }
 
                 lastVisitedLevel = level;
@@ -307,9 +307,9 @@ namespace DataStructures
                     yield return builder.ToString();
                 }
 
-                foreach (var pair in currentNode.Children)
+                foreach (var child in currentNode.Children.Values)
                 {
-                    stack.Push((level + 1, pair.Key, pair.Value));
+                    stack.Push((level + 1, child));
                 }
             }
         }
