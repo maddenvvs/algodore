@@ -4,15 +4,55 @@ namespace DataStructures
     using System.Collections;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Singly linked list implementation.
+    /// </summary>
+    /// <typeparam name="T">Type of values in the linked list.</typeparam>
     public class SinglyLinkedList<T> : IEnumerable<T>
     {
+        /// <summary>
+        /// Creates empty singly linked list.
+        /// </summary>
         public SinglyLinkedList()
+            : this(Array.Empty<T>())
         {
-            this.Clear();
         }
 
+        /// <summary>
+        /// Creates singly linked list populated with values from provided collection.
+        /// </summary>
+        /// <param name="collection">The collection of values to be added.</param>
+        public SinglyLinkedList(IEnumerable<T> collection)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            this.Clear();
+
+            foreach (var value in collection)
+            {
+                this.Append(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets length of the linked list.
+        ///
+        /// Time complexity: O(1).
+        ///
+        /// Space complexity: O(1).
+        /// </summary>
         public int Count { get; private set; }
 
+        /// <summary>
+        /// Determines whether the linked list is empty.
+        ///
+        /// Time complexity: O(1).
+        ///
+        /// Space complexity: O(1).
+        /// </summary>
         public bool IsEmpty { get => this.Count == 0; }
 
         private Node Head { get; set; }
