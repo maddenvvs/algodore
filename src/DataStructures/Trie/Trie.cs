@@ -133,16 +133,9 @@ namespace DataStructures
             var parentNode = lastNode.Parent;
             lastNode.IsWord = false;
 
-            for (var idx = word.Length - 1; idx >= 0; idx--)
+            while (parentNode != null && lastNode.Children.Count == 0 && !lastNode.IsWord)
             {
-                char letter = word[idx];
-
-                if (lastNode.Children.Count > 0 || lastNode.IsWord)
-                {
-                    break;
-                }
-
-                parentNode.Children.Remove(letter);
+                parentNode.Children.Remove(lastNode.Letter);
 
                 lastNode = parentNode;
                 parentNode = parentNode.Parent;
