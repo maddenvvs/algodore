@@ -59,6 +59,15 @@ namespace DataStructures
 
         private Node Tail { get; set; }
 
+        /// <summary>
+        /// Adds value to the end of the linked list.
+        ///
+        /// Time complexity: O(1).
+        ///
+        /// Space complexity: O(1).
+        /// </summary>
+        /// <param name="value">The value to add to the linked list.</param>
+        /// <returns>Returns modified linked list with added value.</returns>
         public SinglyLinkedList<T> Append(T value)
         {
             var nodeToAppend = new Node(value);
@@ -66,6 +75,15 @@ namespace DataStructures
             return this.AppendNode(nodeToAppend);
         }
 
+        /// <summary>
+        /// Adds linked list node to the end of the linked list.
+        ///
+        /// Time complexity: O(1).
+        ///
+        /// Space complexity: O(1).
+        /// </summary>
+        /// <param name="node">The node to add to the linked list.</param>
+        /// <returns>Returns modified linked list with added node.</returns>
         public SinglyLinkedList<T> AppendNode(Node node)
         {
             if (node == null)
@@ -88,6 +106,15 @@ namespace DataStructures
             return this;
         }
 
+        /// <summary>
+        /// Adds value to the beginning of the linked list.
+        ///
+        /// Time complexity: O(1).
+        ///
+        /// Space complexity: O(1).
+        /// </summary>
+        /// <param name="value">The value to add to the linked list.</param>
+        /// <returns>Returns modified linked list with added value.</returns>
         public SinglyLinkedList<T> Prepend(T value)
         {
             var nodeToPrepend = new Node(value);
@@ -95,6 +122,15 @@ namespace DataStructures
             return this.PrependNode(nodeToPrepend);
         }
 
+        /// <summary>
+        /// Adds linked list node to the beginning of the linked list.
+        ///
+        /// Time complexity: O(1).
+        ///
+        /// Space complexity: O(1).
+        /// </summary>
+        /// <param name="node">The node to add to the linked list.</param>
+        /// <returns>Returns modified linked list with added node.</returns>
         public SinglyLinkedList<T> PrependNode(Node node)
         {
             if (node == null)
@@ -154,11 +190,39 @@ namespace DataStructures
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
+        /// <summary>
+        /// Returns value stored in the linked list at the given index.
+        ///
+        /// Time complexity: O(N).
+        ///
+        /// Space complexity: O(1).
+        ///
+        /// N - length of the linked list.
+        /// </summary>
+        /// <param name="index">The index of item to get.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown when index is out of range.
+        /// </exception>
+        /// <returns>Returns value at the given index.</returns>
         public T GetAt(int index)
         {
             return this.GetNodeAt(index).Value;
         }
 
+        /// <summary>
+        /// Returns node stored in the linked list at the given index.
+        ///
+        /// Time complexity: O(N).
+        ///
+        /// Space complexity: O(1).
+        ///
+        /// N - length of the linked list.
+        /// </summary>
+        /// <param name="index">The index of node to get.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown when index is out of range.
+        /// </exception>
+        /// <returns>Returns node at the given index.</returns>
         public Node GetNodeAt(int index)
         {
             if (this.IsEmpty || index < 0 || index >= this.Count)
@@ -338,7 +402,7 @@ namespace DataStructures
         }
 
         /// <summary>
-        ///
+        /// Returns enumerator of the linked list.
         /// </summary>
         /// <returns>Returns the iterator object.</returns>
         public IEnumerator<T> GetEnumerator()
