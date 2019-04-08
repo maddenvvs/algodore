@@ -5,7 +5,9 @@ matrix:
           mono: none
           dotnet: 2.2
           solution: Algodore.sln
+          env:
+              - DOTNET_CONFIGURATION=Debug
+              - DOTNET_CONFIGURATION=Release
           script:
               - dotnet restore
-              - dotnet build
-              - dotnet test
+              - dotnet test -c $DOTNET_CONFIGURATION
