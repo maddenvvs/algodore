@@ -6,8 +6,18 @@ matrix:
           dotnet: 2.2
           solution: Algodore.sln
           env:
-              - DOTNET_CONFIGURATION=Debug
-              - DOTNET_CONFIGURATION=Release
+              - ALGODORE_DOTNET_CONFIGURATION=Debug
           script:
               - dotnet restore
-              - dotnet test -c $DOTNET_CONFIGURATION
+              - dotnet test -c $ALGODORE_DOTNET_CONFIGURATION
+
+        - language: csharp
+          dist: xenial
+          mono: none
+          dotnet: 2.2
+          solution: Algodore.sln
+          env:
+              - ALGODORE_DOTNET_CONFIGURATION=Release
+          script:
+              - dotnet restore
+              - dotnet test -c $ALGODORE_DOTNET_CONFIGURATION
