@@ -260,6 +260,30 @@ namespace DataStructures.Tests
             Assert.False(this.splayTree.Contains(value));
         }
 
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        [InlineData(25)]
+        [InlineData(18)]
+        public void Remove_ShouldDecreaseCountByOneIfValueExists(int value)
+        {
+            this.splayTree.Remove(value);
+
+            Assert.Equal(7, this.splayTree.Count);
+        }
+
+        [Theory]
+        [InlineData(17)]
+        [InlineData(20)]
+        [InlineData(-25)]
+        [InlineData(3)]
+        public void Remove_ShouldNotChangeCountIfValueDoesntExist(int value)
+        {
+            this.splayTree.Remove(value);
+
+            Assert.Equal(8, this.splayTree.Count);
+        }
+
         [Fact]
         public void Min_ShouldReturnMinValueOfAllAddedValues()
         {
@@ -339,6 +363,56 @@ namespace DataStructures.Tests
             var postOrder = new int[] { -47, -1, 0, 6, 18, 4, 100, 25 };
 
             Assert.Equal(postOrder, this.splayTree.TraversePostOrder());
+        }
+
+        [Fact]
+        public void Min_ShouldMoveMinNodeToTheRoot()
+        {
+            this.splayTree.Min();
+
+            Assert.Equal(-47, this.splayTree.TraversePreOrder().First());
+        }
+
+        [Fact]
+        public void Max_ShouldMoveMaxNodeToTheRoot()
+        {
+            this.splayTree.Max();
+
+            Assert.Equal(100, this.splayTree.TraversePreOrder().First());
+        }
+
+        [Theory]
+        [InlineData(100)]
+        [InlineData(6)]
+        [InlineData(0)]
+        [InlineData(-47)]
+        public void Contains_ShouldMoveNodeWithValueToTheRootIfValueExists(int value)
+        {
+            this.splayTree.Contains(value);
+
+            Assert.Equal(value, this.splayTree.TraversePreOrder().First());
+        }
+
+        [Theory]
+        [InlineData(new object[] { 1000, 100 })]
+        [InlineData(new object[] { 5, 6 })]
+        [InlineData(new object[] { 20, 18 })]
+        public void Contains_MovesNodeWithNearValueToTheRootIfValueDoesntExist(int value, int near)
+        {
+            this.splayTree.Contains(value);
+
+            Assert.Equal(near, this.splayTree.TraversePreOrder().First());
+        }
+
+        [Theory]
+        [InlineData(105)]
+        [InlineData(-2)]
+        [InlineData(-30)]
+        public void Add_MovesNodeWithAddedValueToTheRoot(int value)
+        {
+            this.splayTree.Add(value);
+
+            Assert.Equal(value, this.splayTree.TraversePreOrder().First());
         }
     }
 }

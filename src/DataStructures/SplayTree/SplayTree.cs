@@ -362,7 +362,7 @@ namespace DataStructures
 
         private void Splay(Node node)
         {
-            while (node != this.Root)
+            while (node.Parent != null)
             {
                 var grandParent = node.Parent.Parent;
 
