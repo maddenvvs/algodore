@@ -72,6 +72,7 @@ namespace DataStructures
             this.Parent = new Dictionary<T, T>(comparer);
             this.Size = new Dictionary<T, int>(comparer);
             this.DisjointSetsCount = 0;
+            this.Comparer = comparer;
 
             foreach (var item in collection)
             {
@@ -99,11 +100,11 @@ namespace DataStructures
         /// <value>The total number of disjoint sets.</value>
         public int DisjointSetsCount { get; private set; }
 
-        private Dictionary<T, T> Parent { get; set; }
+        private Dictionary<T, T> Parent { get; }
 
-        private Dictionary<T, int> Size { get; set; }
+        private Dictionary<T, int> Size { get; }
 
-        private IEqualityComparer<T> Comparer { get; set; }
+        private IEqualityComparer<T> Comparer { get; }
 
         /// <summary>
         /// Returns the size of the set the given item belongs to.
