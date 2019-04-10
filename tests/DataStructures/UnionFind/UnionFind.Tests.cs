@@ -291,11 +291,60 @@ namespace DataStructures.Tests
         [InlineData(new object[] { 0, 19 })]
         [InlineData(new object[] { 19, 17 })]
         [InlineData(new object[] { -1, -27 })]
-        public void Find_ReturnSameRootForElementsFromTheSameSet(int l, int r)
+        public void Find_ReturnSameRootForTwoElementsFromTheSameSet(int l, int r)
         {
             this.uf.Union(l, r);
 
             Assert.Equal(this.uf.Find(l), this.uf.Find(r));
+        }
+
+        [Theory]
+        [InlineData(new object[] { 4, -1 })]
+        [InlineData(new object[] { 0, 19 })]
+        [InlineData(new object[] { 19, 17 })]
+        [InlineData(new object[] { -1, -27 })]
+        public void SizeOf_ReturnTwoAfterUnionTwoSeparatedElements(int l, int r)
+        {
+            this.uf.Union(l, r);
+
+            Assert.Equal(2, this.uf.SizeOf(l));
+            Assert.Equal(2, this.uf.SizeOf(r));
+        }
+
+        [Theory]
+        [InlineData(new object[] { 4, -1, 0 })]
+        [InlineData(new object[] { 0, 19, 17 })]
+        [InlineData(new object[] { 19, 17, -1 })]
+        [InlineData(new object[] { 4, -1, -27 })]
+        public void Find_ReturnSameRootForThreeElementsFromTheSameSet(
+            int a,
+            int b,
+            int c)
+        {
+            this.uf.Union(a, b);
+            this.uf.Union(c, b);
+
+            Assert.Equal(this.uf.Find(a), this.uf.Find(b));
+            Assert.Equal(this.uf.Find(b), this.uf.Find(c));
+            Assert.Equal(this.uf.Find(c), this.uf.Find(a));
+        }
+
+        [Theory]
+        [InlineData(new object[] { 4, -1, 0 })]
+        [InlineData(new object[] { 0, 19, 17 })]
+        [InlineData(new object[] { 19, 17, -1 })]
+        [InlineData(new object[] { 4, -1, -27 })]
+        public void SizeOf_Return3AfterUnionThreeSeparatedElements(
+            int a,
+            int b,
+            int c)
+        {
+            this.uf.Union(a, b);
+            this.uf.Union(c, b);
+
+            Assert.Equal(3, this.uf.SizeOf(a));
+            Assert.Equal(3, this.uf.SizeOf(b));
+            Assert.Equal(3, this.uf.SizeOf(c));
         }
     }
 }
