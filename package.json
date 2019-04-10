@@ -1,0 +1,29 @@
+{
+  "name": "algodore",
+  "version": "0.0.1",
+  "description": "Just some algorithms and data structures",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./src/",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maddenvvs/algodore.git"
+  },
+  "author": "maddenvvs@gmail.com (https://github.com/maddenvvs)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maddenvvs/algodore/issues"
+  },
+  "homepage": "https://github.com/maddenvvs/algodore#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.4.3",
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.12.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "jest": "^24.7.1",
+    "prettier": "1.16.4"
+  }
+}
