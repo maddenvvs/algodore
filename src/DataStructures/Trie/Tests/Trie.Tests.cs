@@ -1,3 +1,6 @@
+#pragma warning disable SA1600
+#pragma warning disable CS1591
+
 namespace DataStructures.Tests
 {
     using System;

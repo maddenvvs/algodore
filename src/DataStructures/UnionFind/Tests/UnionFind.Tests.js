@@ -1,4 +1,4 @@
-import UnionFind from "../../../src/DataStructures/UnionFind/UnionFind"
+import UnionFind from "../UnionFind"
 
 describe("Empty union-find structure", () => {
   let uf

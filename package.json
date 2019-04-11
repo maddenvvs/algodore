@@ -7,6 +7,9 @@
     "lint": "eslint ./src/",
     "test": "jest"
   },
+  "jest": {
+      "testMatch": [ "**/?(*.)+(Tests).[jt]s?(x)" ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maddenvvs/algodore.git"
