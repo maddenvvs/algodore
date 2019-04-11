@@ -26,6 +26,7 @@ matrix:
       node_js: node
 
     - language: python
+      dist: xenial
       python:
         - "3.7"
       script: pytest
