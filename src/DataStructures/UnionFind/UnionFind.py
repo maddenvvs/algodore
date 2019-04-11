@@ -10,10 +10,13 @@ class UnionFind:
     Union-find data structure.
     """
 
-    def __init__(self):
+    def __init__(self, values=[]):
         self._parent = {}
         self._size = {}
         self._disjoint_sets_count = 0
+
+        for value in values:
+            self.make_set(value)
 
     def __len__(self):
         return len(self._parent)
