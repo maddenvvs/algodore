@@ -29,4 +29,4 @@ matrix:
       dist: xenial
       python:
         - "3.7"
-      script: pytest
+      script: python -m pytest
