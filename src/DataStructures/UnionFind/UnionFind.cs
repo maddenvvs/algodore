@@ -88,7 +88,7 @@ namespace DataStructures
         /// Space complexity: O(1).
         /// </summary>
         /// <value>The total number of values.</value>
-        public int Count { get => this.Parent.Count; }
+        public int Count => this.Parent.Count;
 
         /// <summary>
         /// Returns total number of disjoint sets in the UF.
@@ -183,23 +183,23 @@ namespace DataStructures
         /// <returns>Returns true if items united, false otherwise.</returns>
         public bool Union(T first, T second)
         {
-            (T first, T second) roots = (this.Find(first), this.Find(second));
+            var (firstRoot, secondRoot) = (this.Find(first), this.Find(second));
 
-            if (this.Comparer.Equals(roots.first, roots.second))
+            if (this.Comparer.Equals(firstRoot, secondRoot))
             {
                 return false;
             }
 
             (int first, int second) sizes =
-                (this.Size[roots.first], this.Size[roots.second]);
+                (this.Size[firstRoot], this.Size[secondRoot]);
 
             if (sizes.first < sizes.second)
             {
-                roots = (roots.second, roots.first);
+                (firstRoot, secondRoot) = (secondRoot, firstRoot);
             }
 
-            this.Parent[roots.second] = roots.first;
-            this.Size[roots.first] += this.Size[roots.second];
+            this.Parent[secondRoot] = firstRoot;
+            this.Size[firstRoot] += this.Size[secondRoot];
             this.DisjointSetsCount--;
 
             return true;
