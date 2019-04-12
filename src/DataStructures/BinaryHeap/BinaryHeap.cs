@@ -84,6 +84,7 @@ namespace DataStructures
 
             this.Items = collection;
             this.Comparer = comparer;
+
             this.BuildHeap();
         }
 
@@ -95,7 +96,7 @@ namespace DataStructures
         /// Space complexity: O(1).
         /// </summary>
         /// <value>Returns non-negative number of elements.</value>
-        public int Count { get => this.Items.Count; }
+        public int Count => this.Items.Count;
 
         /// <summary>
         /// Determines whether the heap is empty.
@@ -105,7 +106,7 @@ namespace DataStructures
         /// Space complexity: O(1).
         /// </summary>
         /// <value>Returns true if the heap is empty, false otherwise.</value>
-        public bool IsEmpty { get => this.Count == 0; }
+        public bool IsEmpty => this.Count == 0;
 
         private IComparer<T> Comparer { get; }
 
@@ -300,6 +301,7 @@ namespace DataStructures
                 this.SwapItems(index, destIndex);
 
                 index = destIndex;
+
                 leftChild = LeftChildOf(index);
                 rightChild = RightChildOf(index);
             }
