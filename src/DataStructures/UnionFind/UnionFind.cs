@@ -183,24 +183,23 @@ namespace DataStructures
         /// <returns>Returns true if items united, false otherwise.</returns>
         public bool Union(T first, T second)
         {
-            T firstRoot = this.Find(first), secondRoot = this.Find(second);
+            (T first, T second) roots = (this.Find(first), this.Find(second));
 
-            if (this.Comparer.Equals(firstRoot, secondRoot))
+            if (this.Comparer.Equals(roots.first, roots.second))
             {
                 return false;
             }
 
-            int firstSize = this.Size[firstRoot],
-                secondSize = this.Size[secondRoot];
-            if (firstSize < secondSize)
+            (int first, int second) sizes =
+                (this.Size[roots.first], this.Size[roots.second]);
+
+            if (sizes.first < sizes.second)
             {
-                var tmp = firstRoot;
-                firstRoot = secondRoot;
-                secondRoot = tmp;
+                roots = (roots.second, roots.first);
             }
 
-            this.Parent[secondRoot] = firstRoot;
-            this.Size[firstRoot] += this.Size[secondRoot];
+            this.Parent[roots.second] = roots.first;
+            this.Size[roots.first] += this.Size[roots.second];
             this.DisjointSetsCount--;
 
             return true;
