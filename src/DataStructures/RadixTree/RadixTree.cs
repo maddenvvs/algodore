@@ -82,12 +82,14 @@ namespace DataStructures
 
             while (wordIdx < word.Length)
             {
+                var wordChar = word[wordIdx];
+
                 if (inNodeIdx == currentNode.Label.Length)
                 {
-                    if (!currentNode.Children.TryGetValue(word[wordIdx], out nextNode))
+                    if (!currentNode.Children.TryGetValue(wordChar, out nextNode))
                     {
                         nextNode = new Node(word.Substring(wordIdx), currentNode);
-                        currentNode.Children[word[wordIdx]] = nextNode;
+                        currentNode.Children[wordChar] = nextNode;
 
                         currentNode = nextNode;
 
@@ -99,12 +101,12 @@ namespace DataStructures
                 }
                 else
                 {
-                    if (word[wordIdx] != currentNode.Label[inNodeIdx])
+                    if (wordChar != currentNode.Label[inNodeIdx])
                     {
                         var newParent = SplitNodeAtIndex(currentNode, inNodeIdx);
 
                         var wordNode = new Node(word.Substring(wordIdx), newParent);
-                        newParent.Children[word[wordIdx]] = wordNode;
+                        newParent.Children[wordChar] = wordNode;
 
                         currentNode = wordNode;
 
@@ -285,15 +287,15 @@ namespace DataStructures
 
         private static Node SplitNodeAtIndex(Node node, int index)
         {
-            var newParentNode = new Node(node.Label.Substring(0, index), node.Parent);
+            var newParent = new Node(node.Label.Substring(0, index), node.Parent);
 
-            newParentNode.Children[node.Label[index]] = node;
-            node.Parent.Children[node.Label[0]] = newParentNode;
+            newParent.Children[node.Label[index]] = node;
+            node.Parent.Children[node.Label[0]] = newParent;
 
             node.Label = node.Label.Substring(index);
-            node.Parent = newParentNode;
+            node.Parent = newParent;
 
-            return newParentNode;
+            return newParent;
         }
 
         private static bool IsNodeMeansEndOfWord(Node node, int inNodeIdx) =>
