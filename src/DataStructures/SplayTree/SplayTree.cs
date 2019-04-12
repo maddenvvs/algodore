@@ -200,7 +200,7 @@ namespace DataStructures
         /// </returns>
         public SplayTree<T> Add(T value)
         {
-            (Node left, Node right) = this.Split(value);
+            var (left, right) = this.Split(value);
 
             this.Root = new Node(value)
             {
@@ -230,7 +230,7 @@ namespace DataStructures
         /// </returns>
         public SplayTree<T> Remove(T value)
         {
-            (Node left, Node right) = this.Split(value);
+            var (left, right) = this.Split(value);
 
             this.Root = this.Merge(left, right);
 
@@ -440,7 +440,7 @@ namespace DataStructures
             return treeNode;
         }
 
-        private (Node, Node) Split(T value)
+        private (Node left, Node right) Split(T value)
         {
             if (this.Root == null)
             {
@@ -453,8 +453,7 @@ namespace DataStructures
 
             if (compareValue == 0)
             {
-                Node left = root.Left,
-                    right = root.Right;
+                var (left, right) = (root.Left, root.Right);
 
                 SetParent(right, null);
                 SetParent(left, null);
