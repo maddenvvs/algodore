@@ -55,7 +55,7 @@ namespace DataStructures
         /// <summary>
         /// Determines whether the tree is empty.
         /// </summary>
-        public bool IsEmpty { get => this.Count == 0; }
+        public bool IsEmpty => this.Count == 0;
 
         private Node Root { get; set; }
 
@@ -77,7 +77,7 @@ namespace DataStructures
                 throw new ArgumentNullException(nameof(word));
             }
 
-            Node currentNode = this.Root, nextNode;
+            Node currentNode = this.Root;
             int wordIdx = 0, inNodeIdx = 0;
 
             while (wordIdx < word.Length)
@@ -86,7 +86,7 @@ namespace DataStructures
 
                 if (inNodeIdx == currentNode.Label.Length)
                 {
-                    if (!currentNode.Children.TryGetValue(wordChar, out nextNode))
+                    if (!currentNode.Children.TryGetValue(wordChar, out Node nextNode))
                     {
                         nextNode = new Node(word.Substring(wordIdx), currentNode);
                         currentNode.Children[wordChar] = nextNode;
@@ -303,9 +303,9 @@ namespace DataStructures
             && node.IsWord
             && inNodeIdx == node.Label.Length;
 
-        private (Node, int) FindLastNodeOfPrefix(string prefix)
+        private (Node lastNode, int indexInNode) FindLastNodeOfPrefix(string prefix)
         {
-            Node currentNode = this.Root, nextNode;
+            Node currentNode = this.Root;
             int prefixIdx = 0, inNodeIdx = 0;
 
             while (prefixIdx < prefix.Length)
@@ -314,7 +314,7 @@ namespace DataStructures
 
                 if (inNodeIdx == currentNode.Label.Length)
                 {
-                    if (!currentNode.Children.TryGetValue(letter, out nextNode))
+                    if (!currentNode.Children.TryGetValue(letter, out Node nextNode))
                     {
                         return (null, inNodeIdx);
                     }
