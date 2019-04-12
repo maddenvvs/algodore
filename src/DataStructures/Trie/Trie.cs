@@ -55,7 +55,7 @@ namespace DataStructures
         /// <summary>
         /// Determines whether the trie is empty.
         /// </summary>
-        public bool IsEmpty { get => this.Count == 0; }
+        public bool IsEmpty => this.Count == 0;
 
         private Node Root { get; set; }
 
@@ -77,11 +77,11 @@ namespace DataStructures
                 throw new ArgumentNullException(nameof(word));
             }
 
-            Node currentNode = this.Root, nextNode;
+            Node currentNode = this.Root;
 
             foreach (var letter in word)
             {
-                if (!currentNode.Children.TryGetValue(letter, out nextNode))
+                if (!currentNode.Children.TryGetValue(letter, out Node nextNode))
                 {
                     nextNode = new Node(letter, currentNode);
                     currentNode.Children[letter] = nextNode;
@@ -130,15 +130,14 @@ namespace DataStructures
                     $"There is no word '{word}' in trie.");
             }
 
-            var parentNode = lastNode.Parent;
             lastNode.IsWord = false;
 
+            var parentNode = lastNode.Parent;
             while (parentNode != null && lastNode.Children.Count == 0 && !lastNode.IsWord)
             {
                 parentNode.Children.Remove(lastNode.Letter);
 
-                lastNode = parentNode;
-                parentNode = parentNode.Parent;
+                (lastNode, parentNode) = (parentNode, parentNode.Parent);
             }
 
             this.Count--;
@@ -249,11 +248,11 @@ namespace DataStructures
 
         private Node FindLastNodeOfPrefix(string word)
         {
-            Node currentNode = this.Root, nextNode;
+            Node currentNode = this.Root;
 
             foreach (var letter in word)
             {
-                if (!currentNode.Children.TryGetValue(letter, out nextNode))
+                if (!currentNode.Children.TryGetValue(letter, out Node nextNode))
                 {
                     return null;
                 }
