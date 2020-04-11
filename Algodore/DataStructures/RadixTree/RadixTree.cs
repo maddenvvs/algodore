@@ -86,7 +86,7 @@ namespace DataStructures
 
                 if (inNodeIdx == currentNode.Label.Length)
                 {
-                    if (!currentNode.Children.TryGetValue(wordChar, out Node nextNode))
+                    if (!currentNode.Children.TryGetValue(wordChar, out Node? nextNode))
                     {
                         nextNode = new Node(word.Substring(wordIdx), currentNode);
                         currentNode.Children[wordChar] = nextNode;
@@ -213,11 +213,11 @@ namespace DataStructures
                     $"There is no word '{word}' in tree.");
             }
 
-            prefixNode.IsWord = false;
+            prefixNode!.IsWord = false;
 
             if (prefixNode.Children.Count == 0)
             {
-                prefixNode.Parent.Children.Remove(prefixNode.Label[0]);
+                prefixNode.Parent!.Children.Remove(prefixNode.Label[0]);
             }
 
             this.Count--;
@@ -290,7 +290,7 @@ namespace DataStructures
             var newParent = new Node(node.Label.Substring(0, index), node.Parent);
 
             newParent.Children[node.Label[index]] = node;
-            node.Parent.Children[node.Label[0]] = newParent;
+            node.Parent!.Children[node.Label[0]] = newParent;
 
             node.Label = node.Label.Substring(index);
             node.Parent = newParent;
@@ -298,12 +298,12 @@ namespace DataStructures
             return newParent;
         }
 
-        private static bool IsNodeMeansEndOfWord(Node node, int inNodeIdx) =>
+        private static bool IsNodeMeansEndOfWord(Node? node, int inNodeIdx) =>
             node != null
             && node.IsWord
             && inNodeIdx == node.Label.Length;
 
-        private (Node LastNode, int IndexInNode) FindLastNodeOfPrefix(string prefix)
+        private (Node? LastNode, int IndexInNode) FindLastNodeOfPrefix(string prefix)
         {
             Node currentNode = this.Root;
             int prefixIdx = 0, inNodeIdx = 0;
@@ -314,7 +314,7 @@ namespace DataStructures
 
                 if (inNodeIdx == currentNode.Label.Length)
                 {
-                    if (!currentNode.Children.TryGetValue(letter, out Node nextNode))
+                    if (!currentNode.Children.TryGetValue(letter, out Node? nextNode))
                     {
                         return (null, inNodeIdx);
                     }
@@ -389,7 +389,7 @@ namespace DataStructures
             {
             }
 
-            public Node(string label, Node parent)
+            public Node(string label, Node? parent)
             {
                 this.Label = label;
                 this.Children = new Dictionary<char, Node>();
@@ -399,7 +399,7 @@ namespace DataStructures
 
             public string Label { get; set; }
 
-            public Node Parent { get; set; }
+            public Node? Parent { get; set; }
 
             public Dictionary<char, Node> Children { get; set; }
 

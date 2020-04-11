@@ -8,6 +8,7 @@ namespace DataStructures
     /// </summary>
     /// <typeparam name="T">Type of values stored in the UF.</typeparam>
     public class UnionFind<T>
+        where T : notnull
     {
         /// <summary>
         /// Creates empty UF.

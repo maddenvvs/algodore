@@ -81,7 +81,7 @@ namespace DataStructures
 
             foreach (var letter in word)
             {
-                if (!currentNode.Children.TryGetValue(letter, out Node nextNode))
+                if (!currentNode.Children.TryGetValue(letter, out Node? nextNode))
                 {
                     nextNode = new Node(letter, currentNode);
                     currentNode.Children[letter] = nextNode;
@@ -130,7 +130,7 @@ namespace DataStructures
                     $"There is no word '{word}' in trie.");
             }
 
-            lastNode.IsWord = false;
+            lastNode!.IsWord = false;
 
             var parentNode = lastNode.Parent;
             while (parentNode != null && lastNode.Children.Count == 0 && !lastNode.IsWord)
@@ -243,16 +243,16 @@ namespace DataStructures
             return this;
         }
 
-        private static bool IsNodeMeansEndOfWord(Node node) =>
+        private static bool IsNodeMeansEndOfWord(Node? node) =>
             node != null && node.IsWord;
 
-        private Node FindLastNodeOfPrefix(string word)
+        private Node? FindLastNodeOfPrefix(string word)
         {
             Node currentNode = this.Root;
 
             foreach (var letter in word)
             {
-                if (!currentNode.Children.TryGetValue(letter, out Node nextNode))
+                if (!currentNode.Children.TryGetValue(letter, out Node? nextNode))
                 {
                     return null;
                 }
@@ -263,7 +263,7 @@ namespace DataStructures
             return currentNode;
         }
 
-        private IEnumerable<string> FindWordsContainingNode(Node node, string prefix)
+        private IEnumerable<string> FindWordsContainingNode(Node? node, string prefix)
         {
             if (node == null)
             {
@@ -320,7 +320,7 @@ namespace DataStructures
             {
             }
 
-            public Node(char letter, Node parent)
+            public Node(char letter, Node? parent)
             {
                 this.Parent = parent;
                 this.Letter = letter;
@@ -328,7 +328,7 @@ namespace DataStructures
                 this.IsWord = false;
             }
 
-            public Node Parent { get; set; }
+            public Node? Parent { get; set; }
 
             public char Letter { get; private set; }
 

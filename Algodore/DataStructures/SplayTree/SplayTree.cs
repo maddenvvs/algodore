@@ -107,7 +107,7 @@ namespace DataStructures
         /// </summary>
         public bool IsEmpty => this.Count == 0;
 
-        private Node Root { get; set; }
+        private Node? Root { get; set; }
 
         private IComparer<T> Comparer { get; }
 
@@ -131,7 +131,7 @@ namespace DataStructures
                 throw new InvalidOperationException("Cannot find min value in empty tree.");
             }
 
-            var nodeWithMin = this.Root.FindNodeWithMinValue();
+            var nodeWithMin = this.Root!.FindNodeWithMinValue();
 
             this.Splay(nodeWithMin);
 
@@ -158,7 +158,7 @@ namespace DataStructures
                 throw new InvalidOperationException("Cannot find max value in empty tree.");
             }
 
-            var nodeWithMax = this.Root.FindNodeWithMaxValue();
+            var nodeWithMax = this.Root!.FindNodeWithMaxValue();
 
             this.Splay(nodeWithMax);
 
@@ -256,7 +256,7 @@ namespace DataStructures
                 yield break;
             }
 
-            var currentNode = this.Root.InOrderFirst();
+            Node? currentNode = this.Root!.InOrderFirst();
 
             while (currentNode != null)
             {
@@ -285,7 +285,7 @@ namespace DataStructures
                 yield break;
             }
 
-            var currentNode = this.Root.PreOrderFirst();
+            Node? currentNode = this.Root!.PreOrderFirst();
 
             while (currentNode != null)
             {
@@ -314,7 +314,7 @@ namespace DataStructures
                 yield break;
             }
 
-            var currentNode = this.Root.PostOrderFirst();
+            Node? currentNode = this.Root!.PostOrderFirst();
 
             while (currentNode != null)
             {
@@ -324,7 +324,7 @@ namespace DataStructures
             }
         }
 
-        private static void SetParent(Node child, Node parent)
+        private static void SetParent(Node? child, Node? parent)
         {
             if (child != null)
             {
@@ -332,9 +332,9 @@ namespace DataStructures
             }
         }
 
-        private Node FindNodeWithNearValue(T value)
+        private Node? FindNodeWithNearValue(T value)
         {
-            Node currentNode = this.Root, prevNode = null;
+            Node? currentNode = this.Root, prevNode = null;
 
             while (currentNode != null)
             {
@@ -428,7 +428,7 @@ namespace DataStructures
             child.Parent = grandParent;
         }
 
-        private Node Find(T value)
+        private Node? Find(T value)
         {
             var treeNode = this.FindNodeWithNearValue(value);
 
@@ -440,7 +440,7 @@ namespace DataStructures
             return treeNode;
         }
 
-        private (Node Left, Node Right) Split(T value)
+        private (Node? Left, Node? Right) Split(T value)
         {
             if (this.Root == null)
             {
@@ -449,7 +449,7 @@ namespace DataStructures
 
             var root = this.Find(value);
 
-            var compareValue = this.Comparer.Compare(value, root.Value);
+            var compareValue = this.Comparer.Compare(value, root!.Value);
 
             if (compareValue == 0)
             {
@@ -483,7 +483,7 @@ namespace DataStructures
             }
         }
 
-        private Node Merge(Node left, Node right)
+        private Node? Merge(Node? left, Node? right)
         {
             if (left == null)
             {
@@ -521,11 +521,11 @@ namespace DataStructures
 
             public T Value { get; set; }
 
-            public Node Left { get; set; }
+            public Node? Left { get; set; }
 
-            public Node Right { get; set; }
+            public Node? Right { get; set; }
 
-            public Node Parent { get; set; }
+            public Node? Parent { get; set; }
 
             public Node InOrderFirst()
             {
@@ -539,7 +539,7 @@ namespace DataStructures
                 return currentNode;
             }
 
-            public Node InOrderNext()
+            public Node? InOrderNext()
             {
                 if (this.Right != null)
                 {
@@ -559,7 +559,7 @@ namespace DataStructures
 
             public Node PreOrderFirst() => this;
 
-            public Node PreOrderNext()
+            public Node? PreOrderNext()
             {
                 if (this.Left != null)
                 {
@@ -589,7 +589,7 @@ namespace DataStructures
 
             public Node PostOrderFirst()
             {
-                var currentNode = this;
+                Node currentNode = this;
 
                 while (currentNode.Left != null || currentNode.Right != null)
                 {
@@ -599,14 +599,14 @@ namespace DataStructures
                     }
                     else
                     {
-                        currentNode = currentNode.Right;
+                        currentNode = currentNode.Right!;
                     }
                 }
 
                 return currentNode;
             }
 
-            public Node PostOrderNext()
+            public Node? PostOrderNext()
             {
                 if (this.Parent != null && this.Parent.Left == this &&
                     this.Parent.Right != null)

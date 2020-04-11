@@ -55,9 +55,9 @@ namespace DataStructures
         /// </summary>
         public bool IsEmpty { get => this.Count == 0; }
 
-        private Node Head { get; set; }
+        private Node? Head { get; set; }
 
-        private Node Tail { get; set; }
+        private Node? Tail { get; set; }
 
         /// <summary>
         /// Adds value to the end of the linked list.
@@ -97,7 +97,7 @@ namespace DataStructures
             }
             else
             {
-                this.Tail.Next = node;
+                this.Tail!.Next = node;
                 this.Tail = this.Tail.Next;
             }
 
@@ -262,18 +262,18 @@ namespace DataStructures
 
             if (index == 0)
             {
-                return this.Head;
+                return this.Head!;
             }
             else if (index == this.Count - 1)
             {
-                return this.Tail;
+                return this.Tail!;
             }
             else
             {
-                var currentNode = this.Head;
+                var currentNode = this.Head!;
                 while (index > 0)
                 {
-                    currentNode = currentNode.Next;
+                    currentNode = currentNode.Next!;
                     index--;
                 }
 
@@ -306,7 +306,7 @@ namespace DataStructures
             }
             else
             {
-                this.Head = this.Head.Next;
+                this.Head = this.Head!.Next;
                 this.Count--;
             }
 
@@ -383,7 +383,7 @@ namespace DataStructures
             else
             {
                 var nodeBefore = this.GetNodeAt(index - 1);
-                nodeBefore.Next = nodeBefore.Next.Next;
+                nodeBefore.Next = nodeBefore.Next!.Next;
                 this.Count--;
 
                 return this;
@@ -518,7 +518,7 @@ namespace DataStructures
             /// Gets or sets next node in the chain of singly linked list.
             /// </summary>
             /// <value>Reference to the next node in chain.</value>
-            public Node Next { get; set; }
+            public Node? Next { get; set; }
         }
     }
 }

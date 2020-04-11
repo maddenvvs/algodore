@@ -66,7 +66,7 @@ namespace DataStructures
         /// The comparer used to determine the element order in the heap.
         /// </param>
         public BinaryHeap(IEnumerable<T> collection, IComparer<T> comparer)
-            : this(collection?.ToList(), comparer)
+            : this(collection.ToList(), comparer)
         {
         }
 

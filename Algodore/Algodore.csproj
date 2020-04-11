@@ -9,7 +9,7 @@
 
     <!-- https://stackoverflow.com/a/55492438 -->
     <!-- <LangVersion>8.0</LangVersion> -->
-    <!-- <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors> -->
+    <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
 
     <IsPackable>false</IsPackable>
     <CodeAnalysisRuleSet>..\code.ruleset</CodeAnalysisRuleSet>
