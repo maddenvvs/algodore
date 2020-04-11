@@ -1,32 +1,10 @@
 matrix:
   include:
     - language: csharp
-      dist: xenial
       mono: none
-      dotnet: 2.2
-      solution: Algodore.sln
-      env:
-        - ALGODORE_DOTNET_CONFIGURATION=Debug
+      dotnet: 3.1
+      before_script:
+        - cd Algodore
       script:
         - dotnet restore
-        - dotnet test -c $ALGODORE_DOTNET_CONFIGURATION
-
-    - language: csharp
-      dist: xenial
-      mono: none
-      dotnet: 2.2
-      solution: Algodore.sln
-      env:
-        - ALGODORE_DOTNET_CONFIGURATION=Release
-      script:
-        - dotnet restore
-        - dotnet test -c $ALGODORE_DOTNET_CONFIGURATION
-
-    - language: node_js
-      node_js: node
-
-    - language: python
-      dist: xenial
-      python:
-        - "3.7"
-      script: python -m pytest
+        - dotnet test -c Release

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Nullable>enable</Nullable>
+
+    <!-- https://stackoverflow.com/questions/56811030/enabling-nullable-types-makes-no-difference -->
+    <NullableContextOptions>enable</NullableContextOptions>
+
+    <!-- https://stackoverflow.com/a/55492438 -->
+    <!-- <LangVersion>8.0</LangVersion> -->
+    <!-- <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors> -->
+
+    <IsPackable>false</IsPackable>
+    <CodeAnalysisRuleSet>..\code.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>

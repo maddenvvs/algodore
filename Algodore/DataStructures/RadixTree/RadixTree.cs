@@ -303,7 +303,7 @@ namespace DataStructures
             && node.IsWord
             && inNodeIdx == node.Label.Length;
 
-        private (Node lastNode, int indexInNode) FindLastNodeOfPrefix(string prefix)
+        private (Node LastNode, int IndexInNode) FindLastNodeOfPrefix(string prefix)
         {
             Node currentNode = this.Root;
             int prefixIdx = 0, inNodeIdx = 0;

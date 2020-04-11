@@ -190,10 +190,10 @@ namespace DataStructures
                 return false;
             }
 
-            (int first, int second) sizes =
+            (int First, int Second) sizes =
                 (this.Size[firstRoot], this.Size[secondRoot]);
 
-            if (sizes.first < sizes.second)
+            if (sizes.First < sizes.Second)
             {
                 (firstRoot, secondRoot) = (secondRoot, firstRoot);
             }

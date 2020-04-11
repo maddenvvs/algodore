@@ -440,7 +440,7 @@ namespace DataStructures
             return treeNode;
         }
 
-        private (Node left, Node right) Split(T value)
+        private (Node Left, Node Right) Split(T value)
         {
             if (this.Root == null)
             {
