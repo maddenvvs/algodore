@@ -8,10 +8,10 @@ namespace DataStructures
     /// Min binary heap implementation.
     /// </summary>
     /// <typeparam name="T">Type of elements stored in the heap.</typeparam>
-    public class BinaryHeap<T>
+    public sealed class BinaryHeap<T>
     {
         /// <summary>
-        /// Constructs empty default min binary heap.
+        /// Construct empty default min binary heap.
         ///
         /// Time complexity: O(1).
         ///
@@ -23,7 +23,7 @@ namespace DataStructures
         }
 
         /// <summary>
-        /// Constructs default min binary heap from the given collection.
+        /// Construct default min binary heap from the given collection.
         ///
         /// Time complexity: O(N).
         ///
@@ -38,7 +38,7 @@ namespace DataStructures
         }
 
         /// <summary>
-        /// Constructs empty binary heap with custom element comparer.
+        /// Construct empty binary heap with custom element comparer.
         ///
         /// Time complexity: O(1).
         ///
@@ -53,7 +53,7 @@ namespace DataStructures
         }
 
         /// <summary>
-        /// Constructs binary heap with custom element comparer from the given collection.
+        /// Construct binary heap with custom element comparer from the given collection.
         ///
         /// Time complexity: O(N).
         ///
@@ -89,23 +89,23 @@ namespace DataStructures
         }
 
         /// <summary>
-        /// Returns the amount of elements in the heap.
+        /// Return the amount of elements in the heap.
         ///
         /// Time complexity: O(1).
         ///
         /// Space complexity: O(1).
         /// </summary>
-        /// <value>Returns non-negative number of elements.</value>
+        /// <value>Return non-negative number of elements.</value>
         public int Count => this.Items.Count;
 
         /// <summary>
-        /// Determines whether the heap is empty.
+        /// Determine whether the heap is empty.
         ///
         /// Time complexity: O(1).
         ///
         /// Space complexity: O(1).
         /// </summary>
-        /// <value>Returns true if the heap is empty, false otherwise.</value>
+        /// <value>Return true if the heap is empty, false otherwise.</value>
         public bool IsEmpty => this.Count == 0;
 
         private IComparer<T> Comparer { get; }
@@ -113,7 +113,7 @@ namespace DataStructures
         private List<T> Items { get; }
 
         /// <summary>
-        /// Returns minimal element from the heap without any modification.
+        /// Return minimal element from the heap without any modification.
         ///
         /// Time complexity: O(1).
         ///
@@ -122,7 +122,7 @@ namespace DataStructures
         /// <exception cref="System.InvalidOperationException">
         /// Thrown when the heap is empty.
         /// </exception>
-        /// <returns>Returns minimal element.</returns>
+        /// <returns>Return minimal element.</returns>
         public T Min()
         {
             this.EnsureHeapIsNotEmpty();
@@ -131,7 +131,7 @@ namespace DataStructures
         }
 
         /// <summary>
-        /// Extracts minimal element from the heap preserving binary heap invariant.
+        /// Extract minimal element from the heap preserving binary heap invariant.
         ///
         /// Time complexity: O(log(N)).
         ///
@@ -142,22 +142,23 @@ namespace DataStructures
         /// <exception cref="System.InvalidOperationException">
         /// Thrown when the heap is empty.
         /// </exception>
-        /// <returns>Returns extracted minimal element.</returns>
+        /// <returns>Return extracted minimal element.</returns>
         public T ExtractMin()
         {
             this.EnsureHeapIsNotEmpty();
 
             var minValue = this.Min();
 
-            this.Items[0] = this.Items[this.Count - 1];
-            this.Items.RemoveAt(this.Count - 1);
+            var indexOfLast = this.Count - 1;
+            this.Items[0] = this.Items[indexOfLast];
+            this.Items.RemoveAt(indexOfLast);
             this.SiftDown(0);
 
             return minValue;
         }
 
         /// <summary>
-        /// Inserts element into the heap preserving binary heap invariant.
+        /// Insert element into the heap preserving binary heap invariant.
         ///
         /// Time complexity: O(log(N)).
         ///
@@ -166,17 +167,14 @@ namespace DataStructures
         /// N is size of the heap.
         /// </summary>
         /// <param name="item">New item to add.</param>
-        /// <returns>Returns modified heap with added item.</returns>
-        public BinaryHeap<T> Add(T item)
+        public void Add(T item)
         {
             this.Items.Add(item);
             this.SiftUp(this.Count - 1);
-
-            return this;
         }
 
         /// <summary>
-        /// Merges two heaps into first one.
+        /// Merge two heaps into first one.
         /// Both heaps will be modified.
         ///
         /// Time complexity: O(N * lon(M + N)).
@@ -186,8 +184,7 @@ namespace DataStructures
         /// M and N are sizes of both heaps.
         /// </summary>
         /// <param name="other">Another heap to merge from.</param>
-        /// <returns>Returns modified heap with elements from both heaps.</returns>
-        public BinaryHeap<T> Meld(BinaryHeap<T> other)
+        public void Meld(BinaryHeap<T> other)
         {
             if (other == null)
             {
@@ -198,12 +195,10 @@ namespace DataStructures
             {
                 this.Add(other.ExtractMin());
             }
-
-            return this;
         }
 
         /// <summary>
-        /// Merges two heaps and returns new one.
+        /// Merge two heaps and return new one.
         /// Initial heaps will not be modified.
         ///
         /// Time complexity: O(M + N).
@@ -213,7 +208,7 @@ namespace DataStructures
         /// M and N are sizes of both heaps.
         /// </summary>
         /// <param name="other">Another heap to merge from.</param>
-        /// <returns>Returns new binary heap containing elements from both heaps.</returns>
+        /// <returns>Return new binary heap containing elements from both heaps.</returns>
         public BinaryHeap<T> Merge(BinaryHeap<T> other)
         {
             if (other == null)
@@ -236,15 +231,9 @@ namespace DataStructures
         }
 
         /// <summary>
-        /// Removes all elements from the heap.
+        /// Remove all elements from the heap.
         /// </summary>
-        /// <returns>Modified heap with no elements.</returns>
-        public BinaryHeap<T> Clear()
-        {
-            this.Items.Clear();
-
-            return this;
-        }
+        public void Clear() => this.Items.Clear();
 
         private static int ParentOf(int childIndex) =>
             (childIndex - 1) / 2;
@@ -280,10 +269,10 @@ namespace DataStructures
             }
         }
 
-        private void SiftDown(int index)
+        private void SiftDown(int parentIndex)
         {
-            int leftChild = LeftChildOf(index),
-                rightChild = RightChildOf(index);
+            int leftChild = LeftChildOf(parentIndex),
+                rightChild = RightChildOf(parentIndex);
 
             while (leftChild < this.Items.Count)
             {
@@ -293,30 +282,30 @@ namespace DataStructures
                     destIndex = rightChild;
                 }
 
-                if (!this.ItemIsLess(destIndex, index))
+                if (!this.ItemIsLess(destIndex, parentIndex))
                 {
                     break;
                 }
 
-                this.SwapItems(index, destIndex);
+                this.SwapItems(parentIndex, destIndex);
 
-                index = destIndex;
+                parentIndex = destIndex;
 
-                leftChild = LeftChildOf(index);
-                rightChild = RightChildOf(index);
+                leftChild = LeftChildOf(parentIndex);
+                rightChild = RightChildOf(parentIndex);
             }
         }
 
-        private void SiftUp(int index)
+        private void SiftUp(int childIndex)
         {
-            var parentIndex = ParentOf(index);
+            var parentIndex = ParentOf(childIndex);
 
-            while (this.ItemIsLess(index, parentIndex))
+            while (this.ItemIsLess(childIndex, parentIndex))
             {
-                this.SwapItems(index, parentIndex);
+                this.SwapItems(childIndex, parentIndex);
 
-                index = parentIndex;
-                parentIndex = ParentOf(index);
+                childIndex = parentIndex;
+                parentIndex = ParentOf(childIndex);
             }
         }
 
